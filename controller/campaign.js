@@ -2,6 +2,9 @@
 
 var http = require('http');
 
+var faker = require('Faker');
+
+const configs = require('../configurations').Configuration;
 function Campaign(){}
 
 Campaign.prototype.getAll = function (req,resp, next){
@@ -19,42 +22,51 @@ Campaign.prototype.update = function (req,resp, next){
 const updateCampaign = function (req,resp, next) {
     const id = req.params['id'];
     var newCampaign = req.body;
-    newCampaign.answer = "accepted";
-    newCampaign.name = "megamammute";
 
-    postToCampaignApi(req,resp, next,newCampaign);
-
+    for(var i = 0 ; i < 100000; i++) {
+        postToCampaignApi(req, resp, next, newCampaign, id);
+    }
     resp.send(newCampaign);
+
 };
 
-function postToCampaignApi (req,resp, next,newCampaign){
+function postToCampaignApi (req,resp, next,newCampaign,id){
+
+    var textArray = [
+        'declined',
+        'accepted'
+    ];
+    var randomNumber = Math.floor(Math.random()*textArray.length);
+
+    newCampaign.answer = textArray[randomNumber];
+    newCampaign.name = faker.Company.companyName()
+
+    var i = id;
     var extServerOptions = {
-        host: 'localhost',
-        port: '8080',
-        path: 'campaigns/58f3f274c90fcb1d97f0ba23/receive',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Content-Length' : Buffer.byteLength(newCampaign, 'utf8')
-        }
+        host: configs.host,
+        port: configs.port,
+        path: configs.path + i + configs.resource,
+        method: configs.method,
+        headers: configs.headers
     };
 
+    console.log(extServerOptions.host+extServerOptions.port+extServerOptions.path)
     var reqPost = http.request(extServerOptions, function (res) {
         console.log("response statusCode: ", res.statusCode);
         res.on('data', function (newCampaign) {
             console.log('Posting Result:\n');
-            //process.stdout.write(newCampaign);
+            process.stdout.write(newCampaign);
             console.log('\n\nPOST Operation Completed');
         });
     });
 
 // 7
     reqPost.write(JSON.stringify(newCampaign));
-    reqPost.end();
     reqPost.on('error', function (e) {
         console.error(e);
     });
-    console.log(extServerOptions)
+    reqPost.end();
+
 }
 
 

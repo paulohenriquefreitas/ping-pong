@@ -1,0 +1,18 @@
+{
+  "environments": {
+    "development": {
+      "port": 8000,
+      "campaing":{
+        "host": "campaign-service-v1.staging-b2w.atlas.b2w",
+        "port": "",
+        "path": "/campaigns/",
+        "resource": "/receive",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json"
+
+        }
+      }
+    }
+  }
+}
