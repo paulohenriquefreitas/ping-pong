@@ -1,8 +1,6 @@
 'use strict';
 
-var departments = ['CoolStufs','Celulares','Games','Informática e Tablets'
-    ,'Tv,Áudio e Home Theater','Livros','Filmes, Series e Música'
-    ,'Moda, Beleza e Perfumaria','Eletrodomésticos','Móveis e Decorações','Viagens'];
+var http = require('http');
 
 function Campaign(){}
 
@@ -19,19 +17,47 @@ Campaign.prototype.update = function (req,resp, next){
 };
 
 const updateCampaign = function (req,resp, next) {
+    const id = req.params['id'];
     var newCampaign = req.body;
-    newCampaign.excludedProducts = departments;
+    newCampaign.answer = "accepted";
+    newCampaign.name = "megamammute";
 
-    for(var i = 0; i <= departments.length; i++ ){
-        var index = Math.floor(Math.random() * departments.length)
-        if (!newCampaign.includedProducts.includes(departments[index])) {
-            newCampaign.includedProducts.push(departments[index]);
-            newCampaign.excludedProducts.splice(newCampaign.excludedProducts.indexOf(departments[index]),1);
+    postToCampaignApi(req,resp, next,newCampaign);
+
+    resp.send(newCampaign);
+};
+
+function postToCampaignApi (req,resp, next,newCampaign){
+    var extServerOptions = {
+        host: 'localhost',
+        port: '8080',
+        path: 'campaigns/58f3f274c90fcb1d97f0ba23/receive',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length' : Buffer.byteLength(newCampaign, 'utf8')
         }
     };
-    console.log(newCampaign['includedProducts']);
-    resp.send(req.body);
-};;
+
+    var reqPost = http.request(extServerOptions, function (res) {
+        console.log("response statusCode: ", res.statusCode);
+        res.on('data', function (newCampaign) {
+            console.log('Posting Result:\n');
+            //process.stdout.write(newCampaign);
+            console.log('\n\nPOST Operation Completed');
+        });
+    });
+
+// 7
+    reqPost.write(JSON.stringify(newCampaign));
+    reqPost.end();
+    reqPost.on('error', function (e) {
+        console.error(e);
+    });
+    console.log(extServerOptions)
+}
+
+
 
 
 
