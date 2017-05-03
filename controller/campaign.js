@@ -4,6 +4,8 @@ var http = require('http');
 
 var faker = require('Faker');
 
+const loop_number =  process.env.LOOP_NUMBER ? process.env.LOOP_NUMBER : 10;
+
 const configs = require('../configurations').Configuration;
 function Campaign(){}
 
@@ -21,14 +23,16 @@ Campaign.prototype.update = function (req,resp, next){
 
 const updateCampaign = function (req,resp, next) {
     const id = req.params['id'];
+
     var newCampaign = req.body;
 
-    for(var i = 0 ; i < 100000; i++) {
+    for(var i = 0 ; i < loop_number; i++) {
         postToCampaignApi(req, resp, next, newCampaign, id);
     }
     resp.send(newCampaign);
 
 };
+
 
 function postToCampaignApi (req,resp, next,newCampaign,id){
 
