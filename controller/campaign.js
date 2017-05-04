@@ -1,8 +1,8 @@
 'use strict';
 
-var http = require('http');
+const http = require('http');
 
-var faker = require('Faker');
+const faker = require('Faker');
 
 const loop_number =  process.env.LOOP_NUMBER ? process.env.LOOP_NUMBER : 10;
 
@@ -24,9 +24,9 @@ Campaign.prototype.update = function (req,resp, next){
 const updateCampaign = function (req,resp, next) {
     const id = req.params['id'];
 
-    var newCampaign = req.body;
+    const newCampaign = req.body;
 
-    for(var i = 0 ; i < loop_number; i++) {
+    for(let i = 0 ; i < loop_number; i++) {
         postToCampaignApi(req, resp, next, newCampaign, id);
     }
     resp.send(newCampaign);
@@ -36,16 +36,16 @@ const updateCampaign = function (req,resp, next) {
 
 function postToCampaignApi (req,resp, next,newCampaign,id){
 
-    var textArray = [
+    let textArray = [
         'declined',
         'accepted'
     ];
-    var randomNumber = Math.floor(Math.random()*textArray.length);
+    let randomNumber = Math.floor(Math.random()*textArray.length);
 
     newCampaign.answer = textArray[randomNumber];
     newCampaign.name = faker.Company.companyName()
 
-    var i = id;
+
     var extServerOptions = {
         host: configs.host,
         port: configs.port,
@@ -55,7 +55,7 @@ function postToCampaignApi (req,resp, next,newCampaign,id){
     };
 
     console.log(extServerOptions.host+extServerOptions.port+extServerOptions.path)
-    var reqPost = http.request(extServerOptions, function (res) {
+    const reqPost = http.request(extServerOptions, function (res) {
         console.log("response statusCode: ", res.statusCode);
         res.on('data', function (newCampaign) {
             console.log('Posting Result:\n');

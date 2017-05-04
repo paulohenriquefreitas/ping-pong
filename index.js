@@ -1,20 +1,21 @@
 'use strict';
 
-var app = require ('./app');
-var debug = require('debug')('ping-pong:server');
-var http = require('http');
+const app = require ('./app');
+const debug = require('debug')('ping-pong:server');
+const http = require('http');
+const configs = require('./configurations');
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
 function normalizePort(val) {
-    var port = parseInt(val, 10);
+    let port = parseInt(val, 10);
 
     if (isNaN(port)) {
         // named pipe
@@ -34,7 +35,7 @@ function onError(error) {
         throw error;
     }
 
-    var bind = typeof port === 'string'
+    let bind = typeof port === 'string'
         ? 'Pipe ' + port
         : 'Port ' + port;
 
@@ -54,9 +55,23 @@ function onError(error) {
 }
 
 function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
+    const addr = server.address();
+    const bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+console.log(`
+                                           
+########  #### ##    ##  ######           ########   #######  ##    ##  ######   
+##     ##  ##  ###   ## ##    ##          ##     ## ##     ## ###   ## ##    ##  
+##     ##  ##  ####  ## ##                ##     ## ##     ## ####  ## ##        
+########   ##  ## ## ## ##   #### ####### ########  ##     ## ## ## ## ##   #### 
+##         ##  ##  #### ##    ##          ##        ##     ## ##  #### ##    ##  
+##         ##  ##   ### ##    ##          ##        ##     ## ##   ### ##    ##  
+##        #### ##    ##  ######           ##         #######  ##    ##  ###### 
+
+  Server running on: ${configs.Configuration.port}
+
+`);

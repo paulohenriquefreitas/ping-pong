@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var campaignController = require('../controller/campaign');
+const express = require('express');
+const router = express.Router();
+const campaignController = require('../controller/campaign');
 
 
 router.get('/', campaignController.getAll);
