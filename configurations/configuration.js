@@ -29,6 +29,7 @@ const environment =  () => {
         return {
             host: pingpong.environments.development.campaing.host,
             port: pingpong.environments.development.port,
+            campaign_port:  pingpong.environments.development.campaing.port,
             path: pingpong.environments.development.campaing.path,
             resource: pingpong.environments.development.campaing.resource,
             method: pingpong.environments.development.campaing.method,

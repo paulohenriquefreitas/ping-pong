@@ -3,8 +3,8 @@
     "development": {
       "port": 8000,
       "campaing":{
-        "host": "campaign-service-v1.staging-b2w.atlas.b2w",
-        "port": "",
+        "host": "localhost",
+        "port": "8080",
         "path": "/campaigns/",
         "resource": "/receive",
         "method": "POST",

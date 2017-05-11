@@ -18,60 +18,67 @@ Campaign.prototype.create = function (req,resp, next){
 };
 
 Campaign.prototype.update = function (req,resp, next){
-    resp.json(updateCampaign(req,resp,next));
+    var id = req.params['id'];
+    updateCampaign(id);
+    resp.status(200).json("Invite received succesfully!");
 };
 
-const updateCampaign = function (req,resp, next) {
-    const id = req.params['id'];
-
-    const newCampaign = req.body;
-
+const updateCampaign = function (id) {
     for(let i = 0 ; i < loop_number; i++) {
-        postToCampaignApi(req, resp, next, newCampaign, id);
+        postToCampaignApi(id);
     }
-    resp.send(newCampaign);
-
 };
 
 
-function postToCampaignApi (req,resp, next,newCampaign,id){
+function postToCampaignApi (id) {
 
     let textArray = [
         'declined',
         'accepted'
     ];
-    let randomNumber = Math.floor(Math.random()*textArray.length);
-
-    newCampaign.answer = textArray[randomNumber];
-    newCampaign.name = faker.Company.companyName()
+    let randomNumber = Math.floor(Math.random() * textArray.length);
+    let invite = {
+        answer: textArray[randomNumber],
+        name: faker.Company.companyName(),
+        cnpj: 9277482174857,
+        merchandiseHierarchy: [
+            {
+                quantity: 3,
+                stock: 100,
+                department: 10,
+                subdepartment: 15
+            },
+            {
+                quantity: 1,
+                stock: 200,
+                department: 30,
+            }
+        ]
+    };
 
 
     var extServerOptions = {
         host: configs.host,
-        port: configs.port,
-        path: configs.path + i + configs.resource,
+        port: configs.campaign_port,
+        path: configs.path + id + configs.resource,
         method: configs.method,
         headers: configs.headers
     };
 
-    console.log(extServerOptions.host+extServerOptions.port+extServerOptions.path)
     const reqPost = http.request(extServerOptions, function (res) {
-        console.log("response statusCode: ", res.statusCode);
-        res.on('data', function (newCampaign) {
-            console.log('Posting Result:\n');
-            process.stdout.write(newCampaign);
-            console.log('\n\nPOST Operation Completed');
+        res.on('data', function (invite) {
+            process.stdout.write(invite);
         });
     });
 
 // 7
-    reqPost.write(JSON.stringify(newCampaign));
+    reqPost.write(JSON.stringify(invite));
     reqPost.on('error', function (e) {
         console.error(e);
     });
     reqPost.end();
 
-}
+};
 
 
 
