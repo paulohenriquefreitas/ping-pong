@@ -19,8 +19,13 @@ Campaign.prototype.create = function (req,resp, next){
 
 Campaign.prototype.update = function (req,resp, next){
     var id = req.params['id'];
-    updateCampaign(id);
-    resp.status(200).json("Invite received succesfully!");
+    if(req.body.status == "WAITING") {
+        updateCampaign(id);
+        resp.status(200).json("Invite received succesfully!");
+    }else {
+        console.log("Campanha não está no estado de WAITING");
+        resp.status(400).json("Campanha não está no estado de WAITING");
+    }
 };
 
 const updateCampaign = function (id) {
