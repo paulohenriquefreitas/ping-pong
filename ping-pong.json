@@ -4,7 +4,7 @@
       "port": 8000,
       "campaing":{
         "host": "localhost",
-        "port": "8080",
+        "port": "9000",
         "path": "/campaigns/",
         "resource": "/receive",
         "method": "POST",

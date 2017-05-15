@@ -15,13 +15,15 @@ const environment =  () => {
     if(env == 'production'){
 
         return {
-            port:  process.env.PORT ? process.env.PORT : 9000,
-            mongo: {
-                url:                process.env.MONGO_URL ? process.env.MONGO_URL : 'localhost:27017',
-                base:               process.env.MONGO_BASE ? process.env.MONGO_BASE : 'campaign-service_data',
-                user:               process.env.MONGO_USER ? process.env.MONGO_USER : '',
-                password:           process.env.MONGO_PASSWORD ? process.env.MONGO_PASSWORD : '',
-                readPreferenceTags: process.env.MONGO_READ_PREFERENCE_TAGS ? process.env.MONGO_READ_PREFERENCE_TAGS : ""
+            host:  process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_HOST : 'localhost',
+            port: process.env.PORT ? process.env.PORT : '8000',
+            campaign_port:  process.env.CAMPAIGN_PORT ? process.env.CAMPAIGN_PORT : '9000',
+            path: process.env.CAMPAIGN_PATH ? process.env.CAMPAIGN_PATH : '/campaigns/',
+            resource: process.env.CAMPAIGN_RESOURCE ? process.env.CAMPAIGN_RESOURCE : '/receive',
+            method: process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_METHOD : 'POST',
+            headers: {
+                "Content-Type": "application/json"
+
             }
         }
 

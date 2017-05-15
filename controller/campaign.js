@@ -19,13 +19,13 @@ Campaign.prototype.create = function (req,resp, next){
 
 Campaign.prototype.update = function (req,resp, next){
     var id = req.params['id'];
-    if(req.body.status == "WAITING") {
+    //if(req.body.status == "WAITING") {
         updateCampaign(id);
         resp.status(200).json("Invite received succesfully!");
-    }else {
-        console.log("Campanha não está no estado de WAITING");
-        resp.status(400).json("Campanha não está no estado de WAITING");
-    }
+    //}else {
+       // console.log("Campanha não está no estado de WAITING");
+      //  resp.status(400).json("Campanha não está no estado de WAITING");
+  //  }
 };
 
 const updateCampaign = function (id) {
@@ -48,15 +48,15 @@ function postToCampaignApi (id) {
         cnpj: 9277482174857,
         merchandiseHierarchy: [
             {
-                quantity: 3,
-                stock: 100,
-                department: 10,
-                subdepartment: 15
+                quantity: Math.floor(Math.random() * 20),
+                stock: Math.floor(Math.random() * 200),
+                department: Math.floor(Math.random() * 100),
+                subdepartment: Math.floor(Math.random() * 100 / 2)
             },
             {
-                quantity: 1,
-                stock: 200,
-                department: 30,
+                quantity: Math.floor(Math.random() * 20),
+                stock: Math.floor(Math.random() * 200),
+                department: Math.floor(Math.random() * 100)
             }
         ]
     };
