@@ -19,33 +19,45 @@ Campaign.prototype.create = function (req,resp, next){
 
 Campaign.prototype.update = function (req,resp, next){
     var id = req.params['id'];
-    //if(req.body.status == "WAITING") {
+    if(req.body.status == "WAITING" || req.body.status == "ACTIVE") {
+        setTimeout(function(){
         updateCampaign(id);
+        console.log(Date.now())
         resp.status(200).json("Invite received succesfully!");
-    //}else {
-       // console.log("Campanha não está no estado de WAITING");
-      //  resp.status(400).json("Campanha não está no estado de WAITING");
-  //  }
+        },3000);
+    }else if(req.body.status == "CANCELED") {
+        console.log("Campanha foi cancelada");
+        resp.status(200).json("Campanha foi cancelada");
+    }else if(req.body.status == "PAUSED") {
+        console.log("Campanha foi pausada");
+        resp.status(200).json("Campanha foi pausada");
+    }
 };
 
 const updateCampaign = function (id) {
     for(let i = 0 ; i < loop_number; i++) {
-        postToCampaignApi(id);
+        setTimeout(() => {
+            console.time(id);
+            postToCampaignApi(id);
+            console.timeEnd(id)
+        }, Math.floor(Math.random() * 10000));
     }
 };
 
 
 function postToCampaignApi (id) {
-
+    let invite ;
     let textArray = [
         'declined',
         'accepted'
     ];
     let randomNumber = Math.floor(Math.random() * textArray.length);
-    let invite = {
-        answer: textArray[randomNumber],
+    let randomCnpj = Math.floor(Math.random() * 10000000)
+
+    invite = {
+        reply: textArray[randomNumber],
         name: faker.Company.companyName(),
-        cnpj: 9277482174857,
+        cnpj: randomCnpj.toString(),
         merchandiseHierarchy: [
             {
                 quantity: Math.floor(Math.random() * 20),
@@ -60,6 +72,10 @@ function postToCampaignApi (id) {
             }
         ]
     };
+
+    if(invite.reply == 'declined'){
+        delete invite.merchandiseHierarchy;
+    }
 
 
     var extServerOptions = {

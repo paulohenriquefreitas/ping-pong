@@ -18,11 +18,12 @@ const environment =  () => {
             host:  process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_HOST : 'localhost',
             port: process.env.PORT ? process.env.PORT : '8000',
             campaign_port:  process.env.CAMPAIGN_PORT ? process.env.CAMPAIGN_PORT : '9000',
-            path: process.env.CAMPAIGN_PATH ? process.env.CAMPAIGN_PATH : '/campaigns/',
-            resource: process.env.CAMPAIGN_RESOURCE ? process.env.CAMPAIGN_RESOURCE : '/receive',
+            path: process.env.CAMPAIGN_PATH ? process.env.CAMPAIGN_PATH : '/campaign/',
+            resource: process.env.CAMPAIGN_RESOURCE ? process.env.CAMPAIGN_RESOURCE : '/answer',
             method: process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_METHOD : 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmFtZSI6IlBBVUxPIEhFTlJJUVVFIERFIEZSRUlUQVMiLCJ1c2VybmFtZSI6InBhdWxvLmZyZWl0YXMiLCJlbWFpbCI6InBhdWxvLmZyZWl0YXNAYjJ3ZGlnaXRhbC5jb20iLCJleHAiOjE0OTY5NTU2OTB9.FOm1h0tviUpKkWM8GKwq-gJYHLZYIfOAz-nXlNC6NqU"
 
             }
         }

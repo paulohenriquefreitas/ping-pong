@@ -5,8 +5,8 @@
       "campaing":{
         "host": "localhost",
         "port": "9000",
-        "path": "/campaigns/",
-        "resource": "/receive",
+        "path": "/campaign/",
+        "resource": "/answer",
         "method": "POST",
         "headers": {
           "Content-Type": "application/json"
