@@ -24,7 +24,7 @@ Campaign.prototype.update = function (req,resp, next){
         updateCampaign(id);
         console.log(Date.now())
         resp.status(200).json("Invite received succesfully!");
-        },3000);
+        },300);
     }else if(req.body.status == "CANCELED") {
         console.log("Campanha foi cancelada");
         resp.status(200).json("Campanha foi cancelada");

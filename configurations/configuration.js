@@ -23,7 +23,7 @@ const environment =  () => {
             method: process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_METHOD : 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmFtZSI6IlBBVUxPIEhFTlJJUVVFIERFIEZSRUlUQVMiLCJ1c2VybmFtZSI6InBhdWxvLmZyZWl0YXMiLCJlbWFpbCI6InBhdWxvLmZyZWl0YXNAYjJ3ZGlnaXRhbC5jb20iLCJleHAiOjE0OTY5NTU2OTB9.FOm1h0tviUpKkWM8GKwq-gJYHLZYIfOAz-nXlNC6NqU"
+                "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmFtZSI6InBvcnRhbC5zZXJ2aWNlIiwidXNlcm5hbWUiOiJwb3J0YWwuc2VydmljZSIsImVtYWlsIjoicG9ydGFsLnNlcnZpY2UiLCJleHAiOjE1Mjc4ODE2Njh9.MVWPQWMclsO6Sgiqe16S_XtHgAL_OsrAt6Gh9SdKk2s"
 
             }
         }
