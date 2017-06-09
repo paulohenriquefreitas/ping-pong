@@ -23,10 +23,10 @@ Campaign.prototype.update = function (req,resp, next){
     var id = req.params['id'];
     if(req.body.status == "WAITING" || req.body.status == "ACTIVE") {
         setTimeout(function(){
-        updateCampaign(id);
+        updateCampaign(id,req,resp);
         console.log(Date.now())
         resp.status(200).json("Invite received succesfully!");
-        },300);
+        },30);
     }else if(req.body.status == "CANCELED") {
         console.log("Campanha foi cancelada");
         resp.status(200).json("Campanha foi cancelada");
@@ -36,18 +36,18 @@ Campaign.prototype.update = function (req,resp, next){
     }
 };
 
-const updateCampaign = function (id) {
+const updateCampaign = function (id,req,resp) {
     for(let i = 0 ; i < loop_number; i++) {
         setTimeout(() => {
             console.time(id);
-            postToCampaignApi(id);
+            postToCampaignApi(id,req,resp);
             console.timeEnd(id)
-        }, Math.floor(Math.random() * 10000));
+        }, Math.floor(Math.random() * 10));
     }
 };
 
 
-function postToCampaignApi (id) {
+function postToCampaignApi (id,req,resp) {
     let invite ;
     let textArray = [
         'declined',
@@ -89,15 +89,17 @@ function postToCampaignApi (id) {
         },
         json: true
     }
-    console.log(options.uri)
+    console.log("Uri" + options.uri)
 
 
     requestpromise(options)
         .then(function (response) {
-            console.log(response)
+            console.log("Sucesso" + response);
+
         })
         .catch(function (err) {
-            console.log(err.message)
+            console.log("Erro" + err.message)
+
         });
 
 };
