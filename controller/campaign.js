@@ -74,7 +74,7 @@ function postToCampaignApi (id) {
     };
 
     if(invite.reply == 'declined'){
-        delete invite.merchandiseHierarchy;
+        invite.merchandiseHierarchy = [];
     }
 
 
