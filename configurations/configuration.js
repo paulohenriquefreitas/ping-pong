@@ -15,9 +15,8 @@ const environment =  () => {
     if(env == 'production'){
 
         return {
-            host:  process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_HOST : 'localhost',
             port: process.env.PORT ? process.env.PORT : '8000',
-            campaign_port:  process.env.CAMPAIGN_PORT ? process.env.CAMPAIGN_PORT : '9000',
+            campaign_url:  process.env.CAMPAIGN_URL ? process.env.CAMPAIGN_URL : 'localhost:7000',
             path: process.env.CAMPAIGN_PATH ? process.env.CAMPAIGN_PATH : '/campaign/',
             resource: process.env.CAMPAIGN_RESOURCE ? process.env.CAMPAIGN_RESOURCE : '/answer',
             method: process.env.CAMPAIGN_HOST ? process.env.CAMPAIGN_METHOD : 'POST',

@@ -2,6 +2,8 @@
 
 const http = require('http');
 
+const requestpromise = require('request-promise')
+
 const faker = require('Faker');
 
 const loop_number =  process.env.LOOP_NUMBER ? process.env.LOOP_NUMBER : 10;
@@ -77,27 +79,26 @@ function postToCampaignApi (id) {
         invite.merchandiseHierarchy = [];
     }
 
+    const options = {
+        method: 'POST',
+        uri: configs.campaign_url + configs.path + id + configs.resource,
+        body: invite,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkbmFtZSI6InBvcnRhbC5zZXJ2aWNlIiwidXNlcm5hbWUiOiJwb3J0YWwuc2VydmljZSIsImVtYWlsIjoicG9ydGFsLnNlcnZpY2UiLCJleHAiOjE1Mjc4ODE2Njh9.MVWPQWMclsO6Sgiqe16S_XtHgAL_OsrAt6Gh9SdKk2s"
+        },
+        json: true
+    }
+    console.log(options.uri)
 
-    var extServerOptions = {
-        host: configs.host,
-        port: configs.campaign_port,
-        path: configs.path + id + configs.resource,
-        method: configs.method,
-        headers: configs.headers
-    };
 
-    const reqPost = http.request(extServerOptions, function (res) {
-        res.on('data', function (invite) {
-            process.stdout.write(invite);
+    requestpromise(options)
+        .then(function (response) {
+            console.log(response)
+        })
+        .catch(function (err) {
+            console.log(err.message)
         });
-    });
-
-// 7
-    reqPost.write(JSON.stringify(invite));
-    reqPost.on('error', function (e) {
-        console.error(e);
-    });
-    reqPost.end();
 
 };
 
