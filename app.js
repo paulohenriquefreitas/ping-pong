@@ -8,6 +8,7 @@ const routes = require('./routes');
 
 const campaign = require('./routes/campaign');
 const rs = require('./routes/resource-status');
+const health = require('./routes/health');
 const app = express();
 
 // view engine setup
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/campaign', campaign);
 
 app.use("/resource-status", rs);
+app.use("/health", health);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
