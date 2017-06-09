@@ -4,8 +4,10 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const routes = require('./routes');
 
 const campaign = require('./routes/campaign');
+const rs = require('./routes/resource-status');
 const app = express();
 
 // view engine setup
@@ -21,6 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/campaign', campaign);
+
+app.use("/resource-status", rs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
