@@ -33,6 +33,9 @@ Campaign.prototype.update = function (req,resp, next){
     }else if(req.body.status == "PAUSED") {
         console.log("Campanha foi pausada");
         resp.status(200).json("Campanha foi pausada");
+    }else {
+        console.log("Erro no recebimento da campanha");
+        resp.status(500).json("Erro no recebimento da campanha");
     }
 };
 
@@ -89,12 +92,12 @@ function postToCampaignApi (id,req,resp) {
         },
         json: true
     }
-    console.log("Uri" + options.uri)
+    console.log("Uri: " + options.uri)
 
 
     requestpromise(options)
         .then(function (response) {
-            console.log("Sucesso" + response);
+            console.log("Sucesso" + response.statusCode);
 
         })
         .catch(function (err) {
