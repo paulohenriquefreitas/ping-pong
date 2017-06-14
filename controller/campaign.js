@@ -63,23 +63,15 @@ function postToCampaignApi (id,req,resp) {
         reply: textArray[randomNumber],
         name: faker.Company.companyName(),
         cnpj: randomCnpj.toString(),
-        merchandiseHierarchy: [
-            {
-                quantity: Math.floor(Math.random() * 20),
-                stock: Math.floor(Math.random() * 200),
-                department: Math.floor(Math.random() * 100),
-                subdepartment: Math.floor(Math.random() * 100 / 2)
-            },
-            {
-                quantity: Math.floor(Math.random() * 20),
-                stock: Math.floor(Math.random() * 200),
-                department: Math.floor(Math.random() * 100)
-            }
-        ]
+
     };
 
-    if(invite.reply == 'declined'){
-        invite.merchandiseHierarchy = [];
+    if(invite.reply == 'accepted'){
+        invite['quantity'] = Math.floor(Math.random() * 20),
+        invite['stock'] = Math.floor(Math.random() * 200)
+    }else{
+        invite['quantity'] = 0,
+        invite['stock'] = 0
     }
 
     const options = {
